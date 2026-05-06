@@ -18,7 +18,7 @@
         }
 
         .main-animal {
-            font-size: 3rem;
+            font-size: 2rem;
             color: #fff;
             text-align: center;
             animation: popIn 0.5s ease-out;
@@ -34,8 +34,8 @@
         }
 
         .option {
-            width: 150px;
-            height: 150px;
+            width: 120px;
+            height: 120px;
             background: #ffffffaa;
             display: flex;
             justify-content: center;
@@ -44,16 +44,16 @@
             box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2);
             transition: all 0.3s ease-out;
             cursor: pointer;
+            overflow: hidden;
         }
 
         .option img {
             max-width: 100%;
             max-height: 100%;
-            border-radius: 5px;
         }
 
         .option:hover {
-            transform: scale(1.2);
+            transform: scale(1.15);
             background: #f1a1d1;
         }
 
@@ -72,12 +72,6 @@
             80% { transform: scale(1.2); }
             100% { transform: scale(1); opacity: 1; }
         }
-
-        @keyframes confetti {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(100vh); opacity: 0; }
-        }
-
     </style>
 </head>
 <body>
@@ -86,16 +80,16 @@
 
     <script>
         const animals = [
-            { name: "Elephant", img: "https://source.unsplash.com/150x150/?elephant" },
-            { name: "Lion", img: "https://source.unsplash.com/150x150/?lion" },
-            { name: "Tiger", img: "https://source.unsplash.com/150x150/?tiger" },
-            { name: "Giraffe", img: "https://source.unsplash.com/150x150/?giraffe" },
-            { name: "Monkey", img: "https://source.unsplash.com/150x150/?monkey" },
-            { name: "Zebra", img: "https://source.unsplash.com/150x150/?zebra" },
-            { name: "Kangaroo", img: "https://source.unsplash.com/150x150/?kangaroo" },
-            { name: "Bear", img: "https://source.unsplash.com/150x150/?bear" },
-            { name: "Panda", img: "https://source.unsplash.com/150x150/?panda" },
-            { name: "Wolf", img: "https://source.unsplash.com/150x150/?wolf" },
+            { name: "Elephant", img: "https://upload.wikimedia.org/wikipedia/commons/3/37/African_Bush_Elephant.jpg" },
+            { name: "Lion", img: "https://upload.wikimedia.org/wikipedia/commons/7/73/Lion_waiting_in_Namibia.jpg" },
+            { name: "Tiger", img: "https://upload.wikimedia.org/wikipedia/commons/5/56/Tiger.50.jpg" },
+            { name: "Giraffe", img: "https://upload.wikimedia.org/wikipedia/commons/9/9f/Giraffe_standing.jpg" },
+            { name: "Monkey", img: "https://upload.wikimedia.org/wikipedia/commons/3/3a/Capuchin_Costa_Rica.jpg" },
+            { name: "Zebra", img: "https://upload.wikimedia.org/wikipedia/commons/a/a1/2010-botswana-zebra.jpg" },
+            { name: "Kangaroo", img: "https://upload.wikimedia.org/wikipedia/commons/e/e1/Kangaroo_Australia_01.jpg" },
+            { name: "Bear", img: "https://upload.wikimedia.org/wikipedia/commons/e/e2/Eurasian_brown_bear.jpg" },
+            { name: "Panda", img: "https://upload.wikimedia.org/wikipedia/commons/0/0f/Grosser_Panda.JPG" },
+            { name: "Wolf", img: "https://upload.wikimedia.org/wikipedia/commons/1/13/Howlsnow.jpg" }
         ];
 
         let currentAnimal = "";
@@ -153,7 +147,7 @@
                 addConfetti();
                 setTimeout(() => startAnimalGame(), 1500);
             } else {
-                alert("Try again!");
+                alert("Oops! Wrong pick. Try again!");
             }
         }
 
