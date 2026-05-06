@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Game Anak Comel</title>
+    
+    <!-- Meta untuk iPhone Full Screen -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="icon.png">
+    <link rel="manifest" href="manifest.json">
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            touch-action: none;
+        }
+
+        .game-card {
+            width: 80vw;
+            height: 60vh;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .emoji {
+            font-size: 100px;
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+        }
+
+        .emoji:active {
+            transform: scale(1.5);
+        }
+
+        h1 { color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.1); }
+    </style>
+</head>
+<body>
+
+    <div class="game-card" onclick="changeEmoji()">
+        <h1 id="title">Sentuh Saya!</h1>
+        <div id="target" class="emoji">ð</div>
+    </div>
+
+    <script>
+        const emojis = ['ð', 'ð¶', 'ð', 'ð', 'ð¦', 'ð¦', 'â­'];
+        const colors = ['#ff9a9e', '#a1c4fd', '#fbc2eb', '#84fab0', '#fccb90'];
+
+        function changeEmoji() {
+            const target = document.getElementById('target');
+            const newEmoji = emojis[Math.floor(Math.random() * emojis.length)];
+            const newColor = colors[Math.floor(Math.random() * colors.length)];
+            
+            target.innerHTML = newEmoji;
+            document.body.style.background = newColor;
+            
+            // Haptic feedback (vibration) - jika disokong
+            if (navigator.vibrate) navigator.vibrate(50);
+        }
+    </script>
+</body>
+</html>
