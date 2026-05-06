@@ -18,7 +18,7 @@
         }
 
         .main-animal {
-            font-size: 5rem;
+            font-size: 3rem;
             color: #fff;
             text-align: center;
             animation: popIn 0.5s ease-out;
@@ -27,17 +27,16 @@
 
         .options-container {
             display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
             gap: 1rem;
             margin-top: 20px;
         }
 
         .option {
-            width: 6rem;
-            height: 6rem;
+            width: 150px;
+            height: 150px;
             background: #ffffffaa;
-            color: #333;
-            font-size: 1.5rem;
-            font-weight: bold;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -45,6 +44,12 @@
             box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2);
             transition: all 0.3s ease-out;
             cursor: pointer;
+        }
+
+        .option img {
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 5px;
         }
 
         .option:hover {
@@ -81,16 +86,16 @@
 
     <script>
         const animals = [
-            "Elephant",
-            "Lion",
-            "Tiger",
-            "Giraffe",
-            "Monkey",
-            "Zebra",
-            "Kangaroo",
-            "Bear",
-            "Panda",
-            "Wolf",
+            { name: "Elephant", img: "https://source.unsplash.com/150x150/?elephant" },
+            { name: "Lion", img: "https://source.unsplash.com/150x150/?lion" },
+            { name: "Tiger", img: "https://source.unsplash.com/150x150/?tiger" },
+            { name: "Giraffe", img: "https://source.unsplash.com/150x150/?giraffe" },
+            { name: "Monkey", img: "https://source.unsplash.com/150x150/?monkey" },
+            { name: "Zebra", img: "https://source.unsplash.com/150x150/?zebra" },
+            { name: "Kangaroo", img: "https://source.unsplash.com/150x150/?kangaroo" },
+            { name: "Bear", img: "https://source.unsplash.com/150x150/?bear" },
+            { name: "Panda", img: "https://source.unsplash.com/150x150/?panda" },
+            { name: "Wolf", img: "https://source.unsplash.com/150x150/?wolf" },
         ];
 
         let currentAnimal = "";
@@ -116,16 +121,17 @@
         }
 
         function startAnimalGame() {
-            currentAnimal = animals[Math.floor(Math.random() * animals.length)];
+            const randomIndex = Math.floor(Math.random() * animals.length);
+            currentAnimal = animals[randomIndex];
             const targetEl = document.getElementById('target');
-            targetEl.innerText = currentAnimal;
+            targetEl.innerText = currentAnimal.name;
 
-            sebut(currentAnimal);
+            sebut(currentAnimal.name);
 
             const choices = [currentAnimal];
             while (choices.length < 3) {
-                let animal = animals[Math.floor(Math.random() * animals.length)];
-                if (!choices.includes(animal)) choices.push(animal);
+                const randomAnimal = animals[Math.floor(Math.random() * animals.length)];
+                if (!choices.includes(randomAnimal)) choices.push(randomAnimal);
             }
             choices.sort(() => Math.random() - 0.5);
 
@@ -135,22 +141,19 @@
             choices.forEach((animal) => {
                 const btn = document.createElement("div");
                 btn.className = "option";
-                btn.innerText = animal;
-                btn.onclick = () => checkAnimalAnswer(animal, btn);
+                btn.innerHTML = `<img src="${animal.img}" alt="${animal.name}" />`;
+                btn.onclick = () => checkAnimalAnswer(animal);
                 container.appendChild(btn);
             });
         }
 
-        function checkAnimalAnswer(selected, element) {
-            sebut(selected);
-            if (selected === currentAnimal) {
-                element.style.background = "green";
+        function checkAnimalAnswer(selected) {
+            sebut(selected.name);
+            if (selected.name === currentAnimal.name) {
                 addConfetti();
                 setTimeout(() => startAnimalGame(), 1500);
             } else {
-                element.style.background = "red";
-                element.style.animation = "shake 0.3s";
-                setTimeout(() => (element.style.background = ""), 500);
+                alert("Try again!");
             }
         }
 
