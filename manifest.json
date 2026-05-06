@@ -1,0 +1,15 @@
+{
+  "name": "Game Anak",
+  "short_name": "GameAnak",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#a1c4fd",
+  "theme_color": "#a1c4fd",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}
