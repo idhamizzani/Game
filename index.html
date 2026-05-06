@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Game Anak Comel</title>
+    <title>ABC Match</title>
     
     <!-- Meta untuk iPhone Full Screen -->
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -14,68 +14,116 @@
     <style>
         body {
             margin: 0;
-            padding: 0;
             height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            overflow: hidden;
-            touch-action: none;
-        }
-
-        .game-card {
-            width: 80vw;
-            height: 60vh;
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border-radius: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            text-align: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Arial Rounded MT Bold', sans-serif;
+            overflow: hidden;
+            touch-action: manipulation;
+            color: white;
         }
 
-        .emoji {
-            font-size: 100px;
-            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        /* Glassmorphism Card Utama */
+        .main-letter {
+            font-size: 120px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            padding: 40px 80px;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            margin-bottom: 50px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+        }
+
+        .options-container {
+            display: flex;
+            gap: 20px;
+        }
+
+        /* Butang Pilihan */
+        .option {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 40px;
             cursor: pointer;
+            transition: all 0.2s;
         }
 
-        .emoji:active {
-            transform: scale(1.5);
-        }
+        .option:active { transform: scale(0.9); }
 
-        h1 { color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.1); }
+        .correct { background: rgba(76, 175, 80, 0.5); border-color: #4CAF50; }
+        .wrong { background: rgba(244, 67, 54, 0.5); border-color: #f44336; }
     </style>
 </head>
 <body>
 
-    <div class="game-card" onclick="changeEmoji()">
-        <h1 id="title">Sentuh Saya!</h1>
-        <div id="target" class="emoji">ð</div>
+    <div class="main-letter" id="target">A</div>
+
+    <div class="options-container" id="options">
+        <!-- Pilihan akan dijana oleh JS -->
     </div>
 
     <script>
-        const emojis = ['ð', 'ð¶', 'ð', 'ð', 'ð¦', 'ð¦', 'â­'];
-        const colors = ['#ff9a9e', '#a1c4fd', '#fbc2eb', '#84fab0', '#fccb90'];
+        const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+        let currentLetter = "";
 
-        function changeEmoji() {
-            const target = document.getElementById('target');
-            const newEmoji = emojis[Math.floor(Math.random() * emojis.length)];
-            const newColor = colors[Math.floor(Math.random() * colors.length)];
+        function startGame() {
+            // Pilih abjad sasaran secara rawak
+            currentLetter = alphabet[Math.floor(Math.random() * alphabet.length)];
+            document.getElementById('target').innerText = currentLetter;
+
+            // Cipta 3 pilihan (1 betul, 2 salah)
+            let choices = [currentLetter];
+            while (choices.length < 3) {
+                let randomLetter = alphabet[Math.floor(Math.random() * alphabet.length)];
+                if (!choices.includes(randomLetter)) {
+                    choices.push(randomLetter);
+                }
+            }
+
+            // Rawakkan kedudukan pilihan
+            choices.sort(() => Math.random() - 0.5);
+
+            const container = document.getElementById('options');
+            container.innerHTML = "";
             
-            target.innerHTML = newEmoji;
-            document.body.style.background = newColor;
-            
-            // Haptic feedback (vibration) - jika disokong
-            if (navigator.vibrate) navigator.vibrate(50);
+            choices.forEach(letter => {
+                const btn = document.createElement('div');
+                btn.className = 'option';
+                btn.innerText = letter;
+                btn.onclick = () => checkAnswer(letter, btn);
+                container.appendChild(btn);
+            });
         }
+
+        function checkAnswer(selected, element) {
+            if (selected === currentLetter) {
+                element.classList.add('correct');
+                setTimeout(() => {
+                    startGame(); // Muat abjad baru selepas 1 saat
+                }, 800);
+            } else {
+                element.classList.add('wrong');
+                setTimeout(() => {
+                    element.classList.remove('wrong');
+                }, 500);
+            }
+        }
+
+        // Mula game buat kali pertama
+        startGame();
     </script>
 </body>
 </html>
